@@ -4,12 +4,14 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "5.3.4"
+django-pytest = "0.2.0"
 
 [packages]
-django = "*"
-djangorestframework = "*"
-mysqlclient = "*"
-gunicorn = "*"
+django = "3.0.2"
+djangorestframework = "3.11.0"
+mysqlclient = "1.4.6"
+gunicorn = "20.0.4"
 
 [requires]
 python_version = "3.7"
