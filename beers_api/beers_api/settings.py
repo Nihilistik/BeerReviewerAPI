@@ -11,21 +11,34 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def get_env_variable(var_name: str) -> str:
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(var_name)
+        raise ImproperlyConfigured(error_msg)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*cxfvht=ufxwg*9y6#d6_b2#r(+jh*qtflb66z1nv2%y5-8376'
+SECRET_KEY = get_env_variable(
+    "DJANGO_SECRET_KEY"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ENV = get_env_variable("DJANGO_SETTINGS_MODULE").rsplit(".", 1)[1]
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +51,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+PROJECT_APPS = []
+
+INSTALLED_APPS += PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,8 +92,12 @@ WSGI_APPLICATION = 'beers_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        "NAME": get_env_variable("DB_NAME"),
+        "USER": get_env_variable("DB_USER"),
+        "PASSWORD": get_env_variable("DB_PASS"),
+        "HOST": get_env_variable("DB_HOST"),
+        "PORT": get_env_variable("DB_PORT"),
     }
 }
 
@@ -118,3 +139,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
+    "DEFAULT_THROTTLE_RATES": {
+        "burst_anon": "16/second",
+        "sustained_anon": "60/minute",
+        "burst_user": "16/second",
+        "sustained_user": "120/minute",
+    },
+    "ORDERING_PARAM": "order_by",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 50,
+}
