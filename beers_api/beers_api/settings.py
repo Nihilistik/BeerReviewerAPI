@@ -52,7 +52,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-PROJECT_APPS = []
+PROJECT_APPS = [
+    'beers_api.beer_reviews'
+]
 
 INSTALLED_APPS += PROJECT_APPS
 
