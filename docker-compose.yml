@@ -1,0 +1,54 @@
+version: '3'
+
+networks:
+  local:
+
+volumes:
+  mysql-db:
+  db:
+    driver: local
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=beers_db
+      - MYSQL_USER=dbuser
+      - MYSQL_PASSWORD=dbuser123
+      - MYSQL_ROOT_PASSWORD=SmartProtection
+    volumes:
+      - ./infrastructure/local/provision/mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    networks:
+      local:
+        aliases:
+          - mysql_beers_api
+
+  beers_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - pipenv_dev=1
+    depends_on:
+      - "mysql"
+    links:
+      - mysql:mysql
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PIPENV_DOTENV_LOCATION=/tmp/.env
+    working_dir: /code
+    volumes:
+      - ./beers_api:/code
+      - ./.env:/tmp/.env
+    command: bash -c "
+      dockerize -wait tcp://mysql_beers_api:3306 -timeout 1m &&
+      pipenv run python manage.py migrate &&
+      pipenv run gunicorn --name app --workers 2 --log-level debug --error-logfile /tmp/gunicorn_err.log --reload --bind 0.0.0.0:8000 beers_api.wsgi:application
+      "
+    ports:
+      - 8000:8000
+    networks:
+      local:
