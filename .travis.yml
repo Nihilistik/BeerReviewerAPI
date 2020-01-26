@@ -1,2 +1,6 @@
 language: python
 script: pytest
+env:
+  - DJANGO_SETTINGS_MODULE=beers_api.settings.base
+  - DJANGO_SECRET_KEY=f8iahf6em6ks2ywsmxfs8x9mstuqqx6fhckss7
+  - DJANGO_WSGI_MODULE=beers_api.wsgi
