@@ -1,20 +1,8 @@
 from django.db import models
-PALE = "PALE"
-ALE = "ALE"
-IPA = "IPA"
-RED = "RED"
-BLACK = "BLACK"
-
-BEER_TYPES = [
-    (PALE, PALE),
-    (ALE, ALE),
-    (IPA, IPA),
-    (RED, RED),
-    (BLACK, BLACK),
-]
+from beers_api.beer_reviews.settings import BEER_TYPES
 
 
-class Beers(models.Model):
+class Beer(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(max_length=50)
     type = models.TextField(choices=BEER_TYPES)
@@ -25,3 +13,9 @@ class Beers(models.Model):
     class Meta:
         app_label = "Beers"
         db_table = "beers"
+
+    def __str__(self):
+        return f"Beer: {self.name} , {self.alcohol}º"
+
+    def __repr__(self):
+        return f"name={self.name}, type={self.type}, alcohol={str(self.alcohol)}"

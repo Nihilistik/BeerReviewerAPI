@@ -14,6 +14,7 @@ django = "==3.0.2"
 djangorestframework = "==3.11.0"
 mysqlclient = "==1.4.6"
 gunicorn = "==20.0.4"
+psycopg2 = "==2.8.4"
 
 [requires]
 python_version = "3.7"

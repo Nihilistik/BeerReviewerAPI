@@ -21,7 +21,7 @@ ENV LC_CTYPE es_ES.UTF-8
 ENV PIPENV_PIPFILE /tmp/Pipfile
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-  locales gettext wget libmariadb-dev-compat build-essential \
+  locales gettext wget libmariadb-dev-compat build-essential libpq-dev \
   && rm -rf /var/lib/apt/lists/*
 
 ENV TZ Europe/Madrid

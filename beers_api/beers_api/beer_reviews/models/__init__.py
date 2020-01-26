@@ -1,2 +1,2 @@
-from .beers import Beers
-from .reviews import Reviews
+from .beers import Beer
+from .reviews import Review
