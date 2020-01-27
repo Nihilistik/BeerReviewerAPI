@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 ]
 
 PROJECT_APPS = [
+    'beers_api',
     'beers_api.beer_reviews'
 ]
 
