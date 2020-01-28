@@ -3,16 +3,15 @@ from beers_api.beer_reviews.settings import BEER_TYPES
 
 
 class Beer(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.TextField(max_length=50)
     type = models.TextField(choices=BEER_TYPES)
     alcohol = models.FloatField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        app_label = "Beers"
-        db_table = "beers"
+    # class Meta:
+    #     app_label = "Beers"
+    #     db_table = "beers"
 
     def __str__(self):
         return f"Beer: {self.name} , {self.alcohol}º"

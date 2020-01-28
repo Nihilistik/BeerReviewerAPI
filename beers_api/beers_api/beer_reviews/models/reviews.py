@@ -7,7 +7,7 @@ from django.core.validators import (
 
 class Review(models.Model):
     id = models.AutoField(primary_key=True)
-    beer_id = models.ForeignKey('Beers.Beer', on_delete=models.CASCADE)
+    beer_id = models.ForeignKey('Beer', on_delete=models.CASCADE)
     author = models.TextField(max_length=100)
     rating = models.PositiveIntegerField(
         default=1,
@@ -20,9 +20,9 @@ class Review(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        app_label = "Reviews"
-        db_table = "reviews"
+    # class Meta:
+    #     app_label = "Reviews"
+    #     db_table = "reviews"
 
     def __str__(self):
         return f"Review by: {self.author} for beer {self.beer_id}"

@@ -50,10 +50,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework'
 ]
 
 PROJECT_APPS = [
-    'beers_api',
     'beers_api.beer_reviews'
 ]
 
@@ -94,13 +94,17 @@ WSGI_APPLICATION = 'beers_api.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     "NAME": get_env_variable("DB_NAME"),
+    #     "USER": get_env_variable("DB_USER"),
+    #     "PASSWORD": get_env_variable("DB_PASS"),
+    #     "HOST": get_env_variable("DB_HOST"),
+    #     "PORT": get_env_variable("DB_PORT"),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        "NAME": get_env_variable("DB_NAME"),
-        "USER": get_env_variable("DB_USER"),
-        "PASSWORD": get_env_variable("DB_PASS"),
-        "HOST": get_env_variable("DB_HOST"),
-        "PORT": get_env_variable("DB_PORT"),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
