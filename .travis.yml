@@ -12,4 +12,4 @@ env:
     - DB_PORT=5432
 before_install:
   - "pip install -U pip"
-  - "export PYTHONPATH=$PYTHONPATH:$(pwd)"
+  - "export PYTHONPATH=$PYTHONPATH:$(pwd)/beers_api"
