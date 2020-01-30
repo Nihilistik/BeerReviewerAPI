@@ -10,3 +10,6 @@ env:
     - DB_PASS=dbuser123
     - DB_HOST=postgres_beers_api
     - DB_PORT=5432
+before_install:
+  - "pip install -U pip"
+  - "export PYTHONPATH=$PYTHONPATH:$(pwd)"
