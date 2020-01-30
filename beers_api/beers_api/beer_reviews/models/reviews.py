@@ -25,7 +25,7 @@ class Review(models.Model):
     #     db_table = "reviews"
 
     def __str__(self):
-        return f"Review by: {self.author} for beer {self.beer_id}"
+        return f"Review by: {self.author} for beer {str(self.beer_id)}"
 
     def __repr__(self):
         return f"author={self.author}, rating={str(self.rating)}, review={self.review}"
