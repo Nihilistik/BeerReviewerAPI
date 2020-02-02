@@ -15,6 +15,8 @@ class ReviewModelTest(TestCase):
 
     def test_beer_str(self):
         self.assertEqual(self.str_fixture, str(self.review))
+        self.assertIsInstance(self.review.__str__(), str)
 
     def test_beer_repr(self):
         self.assertEqual(self.repr_fixture, repr(self.review))
+        self.assertIsInstance(self.review.__str__(), str)

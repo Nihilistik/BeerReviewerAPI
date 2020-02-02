@@ -15,6 +15,8 @@ class BeersModelTest(TestCase):
 
     def test_beer_str(self):
         self.assertEqual(self.str_fixture, str(self.beer))
+        self.assertIsInstance(self.beer.__str__(), str)
 
     def test_beer_repr(self):
         self.assertEqual(self.repr_fixture, repr(self.beer))
+        self.assertIsInstance(self.beer.__repr__(), str)
