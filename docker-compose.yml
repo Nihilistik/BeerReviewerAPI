@@ -45,9 +45,9 @@ services:
     command: bash -c "
       dockerize -wait tcp://postgres_beers_api:5432 -timeout 1m &&
       pipenv run python manage.py migrate &&
-      pipenv run gunicorn --name app --workers 2 --log-level debug --error-logfile /tmp/gunicorn_err.log --reload --bind 0.0.0.0:8000 beers_api.wsgi:application
+      pipenv run gunicorn --name app --workers 2 --log-level debug --error-logfile /tmp/gunicorn_err.log --reload --bind 0.0.0.0:9999 beers_api.wsgi:application
       "
     ports:
-      - 8000:8000
+      - 9999:9999
     networks:
       local:
