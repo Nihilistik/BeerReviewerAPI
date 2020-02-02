@@ -2,6 +2,7 @@ from django.test import TestCase
 from beers_api.beer_reviews.models.reviews import Review
 from .factories.fake_review_factory import ReviewFactory
 
+
 class ReviewModelTest(TestCase):
 
     def setUp(self):
