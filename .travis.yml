@@ -1,7 +1,9 @@
+sudo: required
 language: python
-script: pytest
+
 env:
   global:
+    - DOCKER_COMPOSE_VERSION=1.25.4
     - DJANGO_SETTINGS_MODULE=beers_api.settings.base
     - DJANGO_SECRET_KEY=f8iahf6em6ks2ywsmxfs8x9mstuqqx6fhckss7
     - DJANGO_WSGI_MODULE=beers_api.wsgi
@@ -10,6 +12,20 @@ env:
     - DB_PASS=dbuser123
     - DB_HOST=postgres_beers_api
     - DB_PORT=5432
+
 before_install:
-  - "pip install -U pip"
-  - "export PYTHONPATH=$PYTHONPATH:$(pwd)/beers_api"
+  - pip install -U pip
+  - export PYTHONPATH=$PYTHONPATH:$(pwd)/beers_api
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+before_script:
+  - docker-compose up -d --build
+
+script:
+  - docker-compose exec -T beers_api pipenv run pytest
+
+after_script:
+  - docker-compose down
