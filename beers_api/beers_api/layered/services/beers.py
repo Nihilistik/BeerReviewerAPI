@@ -6,7 +6,7 @@ class BeerService:
     def __init__(self):
         pass
 
-    def add_beer(self, beer:dict):
-        new_beer = Beer.create(beer)
+    def add_beer(self, beer: dict):
+        new_beer = Beer(beer)
         new_beer.save()
         return new_beer.id is not None
