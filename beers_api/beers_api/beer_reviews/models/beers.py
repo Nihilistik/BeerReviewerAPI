@@ -1,4 +1,5 @@
 from django.db import models
+
 from beers_api.beer_reviews.settings import BEER_TYPES
 
 
@@ -18,3 +19,12 @@ class Beer(models.Model):
 
     def __repr__(self):
         return f"name={self.name}, type={self.type}, alcohol={str(self.alcohol)}"
+
+    def __dict__(self):
+        return {
+            "name": self.name,
+            "type": self.type,
+            "alcohol": self.alcohol,
+            "created": self.created,
+            "updated": self.updated,
+        }
